@@ -1,0 +1,3 @@
+C:/Users/bkomo/CLionProjects/Programowanie/cmake-build-debug/CMakeFiles/Programowanie.dir
+C:/Users/bkomo/CLionProjects/Programowanie/cmake-build-debug/CMakeFiles/edit_cache.dir
+C:/Users/bkomo/CLionProjects/Programowanie/cmake-build-debug/CMakeFiles/rebuild_cache.dir
