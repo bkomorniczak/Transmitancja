@@ -6,7 +6,6 @@ void withoutZeroesCaseInputData(){
     int withoutZeroesNumerator = 0;
     int n = 0;                                                      // number of both factor and states in denominator
     bool isStable = true;
-    int *temp[n];
 
     printf("Podaj wspolczynnik licznika\n");
     scanf("%d", &withoutZeroesNumerator);
