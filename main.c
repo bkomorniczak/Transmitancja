@@ -1,14 +1,16 @@
 #include <stdio.h>
 #include <stdbool.h>
 #include <mem.h>
+#include <stdlib.h>
+
 
 
 void withoutZeroesCaseInputData(){
     int withoutZeroesNumerator = 0;
     int n = 0;                                                      // number of both factor and states in denominator
-    int denominatorFactors[n];
-    int statesVector[n];
+
     bool isStable = true;
+    int *temp[n];
 
 
 
@@ -18,12 +20,14 @@ void withoutZeroesCaseInputData(){
 
     printf("Podaj liczbe wspolczynnikow z mianownika.\n");
     scanf("%d", &n);
+    int denominatorFactors[n];
+
 
     printf("Podaj kolejne wspolczynniki:\n");
     for(int i=0; i < n; i++){
         scanf("%d",&denominatorFactors[i]);
     }
-
+    int statesVector[n];
 
     printf("Rownanie stanow:\n");
     for (int i=0; i<n; i++){
@@ -39,8 +43,9 @@ void withoutZeroesCaseInputData(){
 
     //statesVector i denominatorFactors wskazuja na ten sam obszar w pamieci TODO: zrob tak,  zeby tak nie było
     // to moze pomoc https://stackoverflow.com/questions/20409931/how-to-copy-values-from-an-array-into-a-new-one
-
-    memcpy(statesVector,denominatorFactors,n);
+    //memcpy(temp,denominatorFactors,n *sizeof(int));
+    memmove(statesVector,denominatorFactors,n *sizeof(int));
+  //  free(temp);
     for(int i = 0; i<n;i++){
         statesVector[i] = -1 * statesVector[i];
     }
@@ -49,12 +54,7 @@ void withoutZeroesCaseInputData(){
     }
     printf(" |x2(t)|\t\t1u(t)\n");
 
-    for(int i = 0; i<n;i++){
-        printf("%d\t",statesVector[i]);
 
-        printf("%d\t",denominatorFactors[i]);
-
-        }
     printf("\n");
     //Badanie stabilności - TODO: wrzuc do osobnej funckji
     if(denominatorFactors[0]==0){
@@ -63,12 +63,10 @@ void withoutZeroesCaseInputData(){
     }
     for(int i = 0; i<n;i++) {
         if (denominatorFactors[i] < 0) {
-            /*isStable = false;
-            printf("tutaj\n\n\n");*/
-            printf("%d",denominatorFactors[i]);
+            isStable = false;
         }
     }
-    if(isStable){
+ if(isStable){
         printf("Uklad stabilny");
     }else{
         printf("uklad niestabilny");
