@@ -1,19 +1,12 @@
 #include <stdio.h>
 #include <stdbool.h>
 #include <mem.h>
-#include <stdlib.h>
-
-
 
 void withoutZeroesCaseInputData(){
     int withoutZeroesNumerator = 0;
     int n = 0;                                                      // number of both factor and states in denominator
-
     bool isStable = true;
     int *temp[n];
-
-
-
 
     printf("Podaj wspolczynnik licznika\n");
     scanf("%d", &withoutZeroesNumerator);
@@ -22,12 +15,10 @@ void withoutZeroesCaseInputData(){
     scanf("%d", &n);
     int denominatorFactors[n];
 
-
     printf("Podaj kolejne wspolczynniki:\n");
     for(int i=0; i < n; i++){
         scanf("%d",&denominatorFactors[i]);
     }
-    int statesVector[n];
 
     printf("Rownanie stanow:\n");
     for (int i=0; i<n; i++){
@@ -40,12 +31,9 @@ void withoutZeroesCaseInputData(){
     printf("Rownanie stanu w postaci wektorowo macierzowej\n");
 
     printf("x'1 =  0\t 1 \t |x1(t)|\t\t0\n\t\t\t\t\t+\nx'2 = ");
-
-    //statesVector i denominatorFactors wskazuja na ten sam obszar w pamieci TODO: zrob tak,  zeby tak nie było
-    // to moze pomoc https://stackoverflow.com/questions/20409931/how-to-copy-values-from-an-array-into-a-new-one
-    //memcpy(temp,denominatorFactors,n *sizeof(int));
+    int statesVector[n];
     memmove(statesVector,denominatorFactors,n *sizeof(int));
-  //  free(temp);
+
     for(int i = 0; i<n;i++){
         statesVector[i] = -1 * statesVector[i];
     }
