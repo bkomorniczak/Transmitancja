@@ -18,12 +18,12 @@ void withoutZeroesCaseInputData(){
     for(int i=0; i < n; i++){
         scanf("%d",&denominatorFactors[i]);
     }
-
+    //TODO: wrzucić równanie do char[], żeby móc je ładnie wyświetlić
     printf("Rownanie stanow:\n");
     for (int i=0; i<n; i++){
-        printf("s^%d",n-i);
+        printf("%ds^%d",denominatorFactors[i],n-(i+1));
         printf("+");
-        printf("%d",denominatorFactors[i]);
+        //printf("%d",denominatorFactors[i-1]);
     }
     printf(" = 0\n");
 
@@ -36,7 +36,7 @@ void withoutZeroesCaseInputData(){
     for(int i = 0; i<n;i++){
         statesVector[i] = -1 * statesVector[i];
     }
-    for(int i = 0; i<n;i++){
+    for(int i = 1; i<n;i++){
         printf("%d\t",statesVector[i]);
     }
     printf(" |x2(t)|\t\t1u(t)\n");
@@ -44,6 +44,9 @@ void withoutZeroesCaseInputData(){
 
     printf("\n");
     //Badanie stabilności - TODO: wrzuc do osobnej funckji
+    //TODO: Rozbudować przypadki o podwyznaczniki.
+    //Wywalić isStable - sa 3 przypadki, nie ma to sensu. stworzyc zmienne bool do "na granicy stablinosci" "niestabilny" "stabilny"
+    //Musi być sprawdzone czy "jest stabliny" nie tylko "nie jest niestabilny"
     if(denominatorFactors[0]==0){
         isStable = false;
         printf("Uklad na granicy stabilnosci");
@@ -62,7 +65,7 @@ void withoutZeroesCaseInputData(){
 
 }
 
-
+//TODO: sprawdzic czy to działa na przypadkach ogólnych, a nie tylko równaniu 2 stopni
 
 void withZeroes(){}
 
