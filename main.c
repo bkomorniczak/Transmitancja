@@ -20,11 +20,13 @@ void withoutZeroesCaseInputData(){
     for(int i=0; i < n; i++){
         scanf("%d",&denominatorFactors[i]);
     }
-    //TODO: wrzucić równanie do char[], żeby móc je ładnie wyświetlić
+
     printf("Rownanie stanow:\n");
     for (int i=0; i<n; i++){
         printf("%ds^%d",denominatorFactors[i],n-(i+1));
-        printf("+");
+       if(i!=n) {
+           printf("+");
+       }
         //printf("%d",denominatorFactors[i-1]);
     }
     printf(" = 0\n");
@@ -81,7 +83,52 @@ void withoutZeroesCaseInputData(){
 
 
 
-void withZeroes(){}
+void withZeroes(int numberOfFactorsInNumerator){
+    int numberOfDenominatorFactors = 0;
+    /*bool isStable = false;
+    bool isNotStable = false;
+    bool isOnTheEdgeOfStability = false;*/
+
+    int numeratorFactors[numberOfFactorsInNumerator];
+    printf("Podaj kolejne wspolczynniki z licznika: \n");
+    for(int i=0; i < numberOfFactorsInNumerator; i++){
+        scanf("%d",&numeratorFactors[i]);
+    }
+
+    printf("Podaj liczbe wspolczynnikow mianownika\n");
+    scanf("%d", &numberOfDenominatorFactors);
+    int denominatorFactors[numberOfDenominatorFactors];
+    printf("Podaj kolejne wspolczynniki mianownika\n");
+    for(int i = 0; i<numberOfDenominatorFactors;i++){
+        scanf("%d", &denominatorFactors[i]);
+    }
+
+    printf("(1)\n\n");
+    int statesVectorOfNumerator[numberOfFactorsInNumerator];
+    memmove(statesVectorOfNumerator, denominatorFactors, numberOfDenominatorFactors * sizeof(int));
+    for(int i = 0; i<numberOfDenominatorFactors;i++){
+        statesVectorOfNumerator[i] = -1 * statesVectorOfNumerator[i];
+    }
+    for(int i = 1; i<numberOfFactorsInNumerator;i++){
+        printf("%d ", statesVectorOfNumerator[i]);
+    }
+
+
+    printf("\n\n\n(2)\n\n");
+
+    int vectorMatrixFactors[2];
+    vectorMatrixFactors[0] = statesVectorOfNumerator[2] + numeratorFactors[2];
+    vectorMatrixFactors[1] = statesVectorOfNumerator[1] + numeratorFactors[1];
+
+
+    printf("\t\t  x1(t)\n");
+    printf("y(t) = [%d\t%d]x2(t) + u(t)",vectorMatrixFactors[0], vectorMatrixFactors[1]);
+
+
+
+
+
+}
 
 
 
@@ -93,7 +140,7 @@ int main() {
     if(numberOfFactorsInNumerator==1){
         withoutZeroesCaseInputData();
     }else{
-        withZeroes();
+        withZeroes(numberOfFactorsInNumerator);
     }
 
 
