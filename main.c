@@ -5,7 +5,9 @@
 void withoutZeroesCaseInputData(){
     int withoutZeroesNumerator = 0;
     int n = 0;                                                      // number of both factor and states in denominator
-    bool isStable = true;
+    bool isStable = false;
+    bool isNotStable = false;
+    bool isOnTheEdgeOfStability = false;
 
     printf("Podaj wspolczynnik licznika\n");
     scanf("%d", &withoutZeroesNumerator);
@@ -44,32 +46,44 @@ void withoutZeroesCaseInputData(){
 
     printf("\n");
     //Badanie stabilności - TODO: wrzuc do osobnej funckji
-    //TODO: Rozbudować przypadki o podwyznaczniki.
-    //Wywalić isStable - sa 3 przypadki, nie ma to sensu. stworzyc zmienne bool do "na granicy stablinosci" "niestabilny" "stabilny"
-    //Musi być sprawdzone czy "jest stabliny" nie tylko "nie jest niestabilny"
-    if(denominatorFactors[0]==0){
-        isStable = false;
-        printf("Uklad na granicy stabilnosci");
-    }
-    for(int i = 0; i<n;i++) {
-        if (denominatorFactors[i] < 0) {
-            isStable = false;
+
+    int submark1 = denominatorFactors[0];
+    int submark2 =denominatorFactors[1] * denominatorFactors[2];
+
+
+    for(int i =0; i<n;i++){
+        if(denominatorFactors[i] >0 && submark1>0 && submark2>0){
+            isStable = true;
         }
     }
- if(isStable){
-        printf("Uklad stabilny");
-    }else{
-        printf("uklad niestabilny");
+    if(denominatorFactors[n] == 0 ||submark1 == 0 ||submark2 == 0){
+        isOnTheEdgeOfStability = true;
+        printf("Podwyznacznik1 = %d\nPodwyznacznik2 = %d\n Wyraz wolny = %d", submark1,submark2, denominatorFactors[n]);
+    }
+    for(int i = 0;i<n;i++){
+        if(denominatorFactors[i]<0 || submark1<0 || submark2 < 0){
+            isNotStable = true;
+        }
+    }
+
+    if(isStable){
+        printf("Uklad stabilny asymptotycznie.");
+    }
+    if(isNotStable){
+        printf("Uklad niestabilny.");
+    }
+    if(isOnTheEdgeOfStability){
+        printf("Uklad na granicy stabilnosci.");
     }
     //Koniec badania stabilności
 
 }
 
-//TODO: sprawdzic czy to działa na przypadkach ogólnych, a nie tylko równaniu 2 stopni
+
 
 void withZeroes(){}
 
-void getUserData(){}
+
 
 
 int main() {
