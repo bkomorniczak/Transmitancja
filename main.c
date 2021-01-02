@@ -2,12 +2,9 @@
 #include <stdbool.h>
 #include <mem.h>
 
-void withoutZeroesCaseInputData(){
+int withoutZeroesCaseInputData(){
     int withoutZeroesNumerator = 0;
     int n = 0;                                                      // number of both factor and states in denominator
-    bool isStable = false;
-    bool isNotStable = false;
-    bool isOnTheEdgeOfStability = false;
 
     printf("Podaj wspolczynnik licznika\n");
     scanf("%d", &withoutZeroesNumerator);
@@ -27,7 +24,6 @@ void withoutZeroesCaseInputData(){
        if(i!=n) {
            printf("+");
        }
-        //printf("%d",denominatorFactors[i-1]);
     }
     printf(" = 0\n");
 
@@ -44,16 +40,65 @@ void withoutZeroesCaseInputData(){
         printf("%d\t",statesVector[i]);
     }
     printf(" |x2(t)|\t\t1u(t)\n");
-
-
     printf("\n");
-    //Badanie stabilności - TODO: wrzuc do osobnej funckji
+    return denominatorFactors;
 
+}
+
+
+
+int  withZeroes(int numberOfFactorsInNumerator){
+    int numberOfDenominatorFactors = 0;
+    int numeratorFactors[numberOfFactorsInNumerator];
+
+    printf("Podaj kolejne wspolczynniki z licznika: \n");
+    for(int i=0; i < numberOfFactorsInNumerator; i++){
+        scanf("%d",&numeratorFactors[i]);
+    }
+
+    printf("Podaj liczbe wspolczynnikow mianownika\n");
+    scanf("%d", &numberOfDenominatorFactors);
+    int denominatorFactors[numberOfDenominatorFactors];
+    printf("Podaj kolejne wspolczynniki mianownika\n");
+    for(int i = 0; i<numberOfDenominatorFactors;i++){
+        scanf("%d", &denominatorFactors[i]);
+    }
+
+    printf("(1)\n\n");
+    int statesVectorOfNumerator[numberOfFactorsInNumerator];
+    memmove(statesVectorOfNumerator, denominatorFactors, numberOfDenominatorFactors * sizeof(int));
+    for(int i = 0; i<numberOfDenominatorFactors;i++){
+        statesVectorOfNumerator[i] = -1 * statesVectorOfNumerator[i];
+    }
+    printf("Rownianie stanu w postaci wektorowo-macierzowej\n");
+    printf("x1(t)\t 0\t %d [x1(t)]\t[0]\n",numeratorFactors[0]);
+    printf("      =\n");
+    printf("x2(t)\t%d\t%d [x2(t)]\t[1] u(t)",statesVectorOfNumerator[2],statesVectorOfNumerator[1]);
+
+
+    printf("\n\n\n(2)\n\n");
+
+    int vectorMatrixFactors[2];
+    vectorMatrixFactors[0] = statesVectorOfNumerator[2] + numeratorFactors[2];
+    vectorMatrixFactors[1] = statesVectorOfNumerator[1] + numeratorFactors[1];
+
+    printf("Rownanie wyjscia w postaci wektorowo-macierzowej\n");
+    printf("\t\t  x1(t)\n");
+    printf("y(t) = [%d\t%d]x2(t) + u(t)\n",vectorMatrixFactors[0], vectorMatrixFactors[1]);
+
+
+ return denominatorFactors;
+}
+
+void checkStability(int  denominatorFactors[]){
+    bool isStable = false;
+    bool isNotStable = false;
+    bool isOnTheEdgeOfStability = false;
     int submark1 = denominatorFactors[0];
     int submark2 =denominatorFactors[1] * denominatorFactors[2];
 
-
-    for(int i =0; i<n;i++){
+    int n = 3;
+    for(int i =0; i < n; i++){
         if(denominatorFactors[i] >0 && submark1>0 && submark2>0){
             isStable = true;
         }
@@ -77,57 +122,6 @@ void withoutZeroesCaseInputData(){
     if(isOnTheEdgeOfStability){
         printf("Uklad na granicy stabilnosci.");
     }
-    //Koniec badania stabilności
-
-}
-
-
-
-void withZeroes(int numberOfFactorsInNumerator){
-    int numberOfDenominatorFactors = 0;
-    /*bool isStable = false;
-    bool isNotStable = false;
-    bool isOnTheEdgeOfStability = false;*/
-
-    int numeratorFactors[numberOfFactorsInNumerator];
-    printf("Podaj kolejne wspolczynniki z licznika: \n");
-    for(int i=0; i < numberOfFactorsInNumerator; i++){
-        scanf("%d",&numeratorFactors[i]);
-    }
-
-    printf("Podaj liczbe wspolczynnikow mianownika\n");
-    scanf("%d", &numberOfDenominatorFactors);
-    int denominatorFactors[numberOfDenominatorFactors];
-    printf("Podaj kolejne wspolczynniki mianownika\n");
-    for(int i = 0; i<numberOfDenominatorFactors;i++){
-        scanf("%d", &denominatorFactors[i]);
-    }
-
-    printf("(1)\n\n");
-    int statesVectorOfNumerator[numberOfFactorsInNumerator];
-    memmove(statesVectorOfNumerator, denominatorFactors, numberOfDenominatorFactors * sizeof(int));
-    for(int i = 0; i<numberOfDenominatorFactors;i++){
-        statesVectorOfNumerator[i] = -1 * statesVectorOfNumerator[i];
-    }
-    for(int i = 1; i<numberOfFactorsInNumerator;i++){
-        printf("%d ", statesVectorOfNumerator[i]);
-    }
-
-
-    printf("\n\n\n(2)\n\n");
-
-    int vectorMatrixFactors[2];
-    vectorMatrixFactors[0] = statesVectorOfNumerator[2] + numeratorFactors[2];
-    vectorMatrixFactors[1] = statesVectorOfNumerator[1] + numeratorFactors[1];
-
-
-    printf("\t\t  x1(t)\n");
-    printf("y(t) = [%d\t%d]x2(t) + u(t)",vectorMatrixFactors[0], vectorMatrixFactors[1]);
-
-
-
-
-
 }
 
 
@@ -135,13 +129,15 @@ void withZeroes(int numberOfFactorsInNumerator){
 
 int main() {
     int numberOfFactorsInNumerator = 0;
+    int  arr;
     printf("Podaj liczbe wspolczynnikow w liczniku\n");
     scanf("%d",&numberOfFactorsInNumerator);
     if(numberOfFactorsInNumerator==1){
-        withoutZeroesCaseInputData();
+       arr= withoutZeroesCaseInputData();
     }else{
-        withZeroes(numberOfFactorsInNumerator);
+        arr =withZeroes(numberOfFactorsInNumerator);
     }
+    checkStability((int *) arr);
 
 
     return 0;
