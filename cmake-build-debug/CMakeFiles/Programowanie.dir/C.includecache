@@ -9,6 +9,8 @@
 C:/Users/bkomo/CLionProjects/Programowanie/main.c
 stdio.h
 -
+stdlib.h
+-
 stdbool.h
 -
 mem.h
